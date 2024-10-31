@@ -1,0 +1,71 @@
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local key = "key_kietmod"
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 300, 0, 200)
+frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+frame.BackgroundColor3 = Color3.new(1, 1, 1)
+frame.Visible = false
+frame.Parent = playerGui
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0, 50)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.Text = "Kiet-Script"
+titleLabel.BackgroundColor3 = Color3.new(0.8, 0.8, 0.8)
+titleLabel.Parent = frame
+
+local textBoxKey = Instance.new("TextBox")
+textBoxKey.Size = UDim2.new(1, -20, 0, 50)
+textBoxKey.Position = UDim2.new(0, 10, 0, 60)
+textBoxKey.PlaceholderText = "Enter Key"
+textBoxKey.Parent = playerGui
+
+local unlockButton = Instance.new("TextButton")
+unlockButton.Size = UDim2.new(1, -20, 0, 30)
+unlockButton.Position = UDim2.new(0, 10, 0, 120)
+unlockButton.Text = "Unlock"
+unlockButton.Parent = playerGui
+
+local textBoxBounty = Instance.new("TextBox")
+textBoxBounty.Size = UDim2.new(1, -20, 0, 50)
+textBoxBounty.Position = UDim2.new(0, 10, 0, 160)
+textBoxBounty.PlaceholderText = "Enter Bounty Amount"
+textBoxBounty.Visible = false
+textBoxBounty.Parent = frame
+
+local confirmButton = Instance.new("TextButton")
+confirmButton.Size = UDim2.new(1, -20, 0, 30)
+confirmButton.Position = UDim2.new(0, 10, 0, 220)
+confirmButton.Text = "Confirm"
+confirmButton.Visible = false
+confirmButton.Parent = frame
+
+local bountyAmount = 0
+
+unlockButton.MouseButton1Click:Connect(function()
+	local enteredKey = textBoxKey.Text
+	if enteredKey == key then
+		frame.Visible = true
+		textBoxKey.Visible = false
+		unlockButton.Visible = false
+		textBoxBounty.Visible = true
+		confirmButton.Visible = true
+		textBoxKey.Text = ""
+	else
+		print("Incorrect key!")
+	end
+end)
+
+confirmButton.MouseButton1Click:Connect(function()
+	local enteredBounty = tonumber(textBoxBounty.Text)
+	if enteredBounty and enteredBounty > 0 then
+		bountyAmount = bountyAmount + enteredBounty
+		print("You received " .. enteredBounty .. " bounty! Total: " .. bountyAmount)
+		textBoxBounty.Text = ""
+	else
+		print("Please enter a valid number!")
+	end
+end)
